@@ -23,19 +23,6 @@ const RegisterPage = () => {
 
   const { register, isRegistering } = useAuthStore();
 
-  // const validateForm = () => {
-  //   const { fullName, email, password } = formData;
-  //   if (!fullName.trim() || !email.trim() || !password) {
-  //     return toast.error("Please fill in all fields.");
-  //   }
-  //   if (password.length < 6) {
-  //     return toast.error("Password must be at least 6 characters.");
-  //   }
-  //   if (!/\S+@\S+\.\S+/.test(email.trim())) {
-  //     return toast.error("Please enter a valid email address.");
-  //   }
-  //   return true;
-  // };
   const handleSubmit = (e) => {
     e.preventDefault();
       register(formData);
@@ -44,7 +31,7 @@ const RegisterPage = () => {
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
      {/* left side */}
-     <div className="flex flex-col justify-center items-center p-6 sm:p-12">
+     <div className="flex flex-col justify-center items-center p-6 sm:p-20">
         <div className="w-full max-w-md space-y-8">
           {/* LOGO */}
           <div className="text-center mb-8">

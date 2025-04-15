@@ -42,6 +42,8 @@ export const register = asyncWrapper(async (req, res, next) => {
         email: newUser.email,
         fullName: newUser.fullName,
         profilePic: newUser.profilePic,
+        createdAt: user.createdAt,
+
     } } });
   } else {
     const error = appError.create("User registration failed", 400, FAIL);
@@ -71,6 +73,7 @@ export const login = asyncWrapper(async (req, res, next) => {
         email: user.email,
         fullName: user.fullName,
         profilePic: user.profilePic,
+        createdAt: user.createdAt,
       },
     },
   });
@@ -107,5 +110,6 @@ export const checkAuth = asyncWrapper((req, res, next) => {
     email: req.user.email,
     fullName: req.user.fullName,
     profilePic: req.user.profilePic,
+    createdAt: req.user.createdAt,
   } } });
 });
