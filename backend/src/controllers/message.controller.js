@@ -34,27 +34,27 @@ export const getMessages = asyncWrapper(
 
 export const sendMessage = asyncWrapper(
     async(req, res, next) => {
-        const {id: receiverId} = req.params;
-        const senderId = req.user._id;
-        const {text, image} = req.body;
-        let imageUrl;
-        if (image) {
-            const uploadResponse = await cloudinary.uploader.upload(image);
-            imageUrl = uploadResponse.secure_url;
-        }
+        const { text, image } = req.body;
+    const { id: receiverId } = req.params;
+    const senderId = req.user._id;
 
-        const newMessage = await Message.create({
-            senderId, 
-            receiverId,
-            text,
-            image: imageUrl
-        })
+    let imageUrl;
+    if (image) {
+      // Upload base64 image to cloudinary
+      const uploadResponse = await cloudinary.uploader.upload(image);
+      imageUrl = uploadResponse.secure_url;
+    }
 
-        await newMessage.save();
+    const newMessage = new Message({
+      senderId,
+      receiverId,
+      text,
+      image: imageUrl,
+    });
 
-        //todo: real time functionality
+    await newMessage.save();
 
-        res.status(200).json({
+        res.status(201).json({
             status: SUCCESS,
             data: {message: newMessage}
         })
