@@ -7,7 +7,9 @@ import { connectDB } from './config/db.js';
 import { ERROR } from './utils/httpStatusText.js';
 import cors from 'cors';
 import {app, server} from "./config/socket.js";
+import path from "path";
 
+const __dirname = path.resolve();
 dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
@@ -20,10 +22,17 @@ app.use(cors(
 
 app.use("/api/auth", authRouter)
 app.use("/api/messages", messageRouter)
+if (process.env.NODE_ENV==="production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-app.all("*name", (req, res, next) => {
-  res.status(404).json({status: ERROR, message: "Resource not found!"});
-})
+  app.all("*name", (req, res, next) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  })
+}
+
+// app.all("*name", (req, res, next) => {
+//   res.status(404).json({status: ERROR, message: "Resource not found!"});
+// })
 
 app.use((error, req, res, next) => {
   res.status(error.statusCode || 400).json({
