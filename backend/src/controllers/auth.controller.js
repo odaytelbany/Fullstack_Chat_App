@@ -42,7 +42,7 @@ export const register = asyncWrapper(async (req, res, next) => {
         email: newUser.email,
         fullName: newUser.fullName,
         profilePic: newUser.profilePic,
-        createdAt: user.createdAt,
+        createdAt: newUser?.createdAt,
 
     } } });
   } else {
@@ -104,12 +104,6 @@ export const updateProfile = asyncWrapper(async (req, res, next) => {
   res.status(200).json({ status: SUCCESS, data: { user: updatedUser } });
 });
 
-export const checkAuth = asyncWrapper((req, res, next) => {
-  res.status(200).json({ status: SUCCESS, data: { user: {
-    _id: req.user._id,
-    email: req.user.email,
-    fullName: req.user.fullName,
-    profilePic: req.user.profilePic,
-    createdAt: req.user.createdAt,
-  } } });
+export const checkAuth = asyncWrapper(async (req, res, next) => {
+  res.status(200).json({ status: SUCCESS, data: req.user});
 });

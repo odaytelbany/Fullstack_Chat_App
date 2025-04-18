@@ -6,9 +6,9 @@ import messageRouter from "./routes/message.route.js";
 import { connectDB } from './config/db.js';
 import { ERROR } from './utils/httpStatusText.js';
 import cors from 'cors';
+import {app, server} from "./config/socket.js";
 
 dotenv.config();
-const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(
@@ -35,7 +35,7 @@ app.use((error, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log('Server is running on: http://localhost:' + PORT);
   connectDB();
 });
